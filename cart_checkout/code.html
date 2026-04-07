@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>She Ate - Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#0a0a0a",
+                    },
+                    fontFamily: {
+                        "display": ["Montserrat", "sans-serif"],
+                        "body": ["Open Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem", // 16dp equivalent
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1, h2, h3, h4, button {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<script defer src="../shared/navigation.js"></script>
+  </head>
+<body class="bg-background-dark text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full max-w-[430px] mx-auto flex-col bg-background-dark overflow-x-hidden border-x border-primary/10">
+<!-- Top App Bar -->
+<div class="flex items-center bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 p-4 pb-2 justify-between border-b border-primary/10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Your Selection</h2>
+<div class="flex w-10 items-center justify-end">
+<p class="text-primary text-sm font-semibold cursor-pointer">Clear</p>
+</div>
+</div>
+<!-- Collection Date & Time Section -->
+<div class="px-4 py-6 space-y-4">
+<!-- Date Selection -->
+<div>
+<label class="text-slate-100 text-lg font-bold block mb-3">Collection Date</label>
+<p class="text-xs text-slate-400 mb-2">Orders available for next day onwards</p>
+<input type="date" id="collection-date" class="w-full bg-white/5 border border-primary/20 rounded-xl text-slate-100 p-3 focus:outline-none focus:ring-1 focus:ring-primary" required/>
+</div>
+
+<!-- Time Slot Selection -->
+<div>
+<label class="text-slate-100 text-lg font-bold block mb-3">Collection Time</label>
+<div class="grid grid-cols-3 gap-3">
+<button type="button" class="time-slot-btn py-3 px-2 rounded-xl border-2 border-primary/30 bg-white/5 text-slate-100 font-semibold hover:border-primary hover:bg-primary/10 transition-all" data-time="06:00">
+<span class="material-symbols-outlined text-sm">sunrise</span>
+<span class="block text-sm mt-1">06:00</span>
+</button>
+<button type="button" class="time-slot-btn py-3 px-2 rounded-xl border-2 border-primary/30 bg-white/5 text-slate-100 font-semibold hover:border-primary hover:bg-primary/10 transition-all" data-time="16:00">
+<span class="material-symbols-outlined text-sm">wb_sunny</span>
+<span class="block text-sm mt-1">16:00</span>
+</button>
+<button type="button" class="time-slot-btn py-3 px-2 rounded-xl border-2 border-primary/30 bg-white/5 text-slate-100 font-semibold hover:border-primary hover:bg-primary/10 transition-all" data-time="21:00">
+<span class="material-symbols-outlined text-sm">nights_stay</span>
+<span class="block text-sm mt-1">21:00</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 mt-2" id="selected-time-display">Select a collection time</p>
+</div>
+
+<!-- Delivery Address Section -->
+<div>
+<h3 class="text-slate-100 text-lg font-bold mb-3">Collection Address</h3>
+<div class="space-y-2">
+<input type="text" id="delivery-address-line1" placeholder="Street Address" class="w-full bg-white/5 border border-primary/20 rounded-xl text-slate-100 p-3 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary" required/>
+<input type="text" id="delivery-address-line2" placeholder="Suburb/City" class="w-full bg-white/5 border border-primary/20 rounded-xl text-slate-100 p-3 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary" required/>
+<textarea id="delivery-address-notes" placeholder="Building/Apartment details, gate code, etc." rows="2" class="w-full bg-white/5 border border-primary/20 rounded-xl text-slate-100 p-3 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary resize-none"></textarea>
+</div>
+</div>
+</div>
+<!-- Order Items -->
+<div class="px-4 pb-4">
+<h3 class="text-slate-100 text-lg font-bold mb-4">Review Items</h3>
+<div class="space-y-4">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 bg-white/5 border border-white/10 p-3 rounded-xl">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 shadow-lg border border-primary/20" data-alt="Gourmet royal truffle burger with gold leaf" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAfBMSm1p4N9_0PHOxiX1uouHr95B2hbonKtTtu3dYuoyS2sU_Wj_uWMFNYxDzr73tqb5yxka8tI3sguVC26PtmqMjzbAHDu2VYxIx0Rf9KcNhmSd2s-_1ssqWpT14zmSV-jUjQCCNlWicjMMsD3E3ScFkGFVb4oj2s6ZAK899H8Zpkm7siPqcN6ni11s1D2aI7hVVKNqicHfXfUpwG1manSwjFfzhafj4nEboWciaIfij1-z3DhEmkoYPOo8P_c4vUgNIwLRM0_t8");'></div>
+<div class="flex flex-col justify-between flex-1 h-20">
+<div>
+<p class="text-slate-100 text-base font-bold leading-tight">Royal Truffle Burger</p>
+<p class="text-primary text-sm font-semibold mt-1">R150.00</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-3 text-slate-100 bg-background-dark rounded-full border border-primary/30 px-2 py-1">
+<button class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<span class="material-symbols-outlined text-slate-500 text-lg">delete</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 bg-white/5 border border-white/10 p-3 rounded-xl">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 shadow-lg border border-primary/20" data-alt="Stack of golden buttermilk pancakes with syrup" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwHHLnZ18R3FUlrnDmQzkxf8o2PPVLPwIsiWNclbPJPVhgxX3PCGKf4TRZdQhqdf-ARB2CujusjPt6uPT6K1svhNjHZ6hjgvC6mNue7Lm4N8Vi-m2Ua9G9de5d8cQW0VsjDq3lkGCQqcibwRWM_jJg_D6GctPTDwsHG0Hahd4g419jB-OevN7tKBy_rWDZUY9W0c-kIeTzf5XcPB298KLFv8dB9Gfu1QC1QTgAdHVzw-v4JjwTu3GqXp3jWVUofYonSZidM5h7ONQ");'></div>
+<div class="flex flex-col justify-between flex-1 h-20">
+<div>
+<p class="text-slate-100 text-base font-bold leading-tight">Golden Silk Pancakes</p>
+<p class="text-primary text-sm font-semibold mt-1">R95.00</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-3 text-slate-100 bg-background-dark rounded-full border border-primary/30 px-2 py-1">
+<button class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="text-sm font-bold w-4 text-center">2</span>
+<button class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<span class="material-symbols-outlined text-slate-500 text-lg">delete</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Note -->
+<div class="px-4 py-2">
+<div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-dashed border-white/20">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+<span class="text-slate-400 text-sm">Add special instructions...</span>
+</div>
+</div>
+<!-- Summary & Checkout -->
+<div class="mt-auto bg-white/[0.02] border-t border-primary/20 p-6 space-y-4 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+<div class="space-y-3">
+<div class="flex justify-between items-center text-slate-400">
+<span class="text-sm">Subtotal</span>
+<span class="text-slate-100 font-semibold tracking-tight">R340.00</span>
+</div>
+<div class="flex justify-between items-center text-slate-400">
+<span class="text-sm">Collection Fee</span>
+<span class="text-slate-100 font-semibold tracking-tight">R0.00</span>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-lg p-3 mb-3">
+<p class="text-xs text-slate-400 mb-2">Collection Details</p>
+<p class="text-sm text-slate-100 font-semibold" id="order-date-display">Date: Not selected</p>
+<p class="text-sm text-slate-100 font-semibold" id="order-time-display">Time: Not selected</p>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-white/5">
+<span class="text-lg font-bold text-slate-100">Total</span>
+<span class="text-xl font-bold text-primary tracking-tight">R340.00</span>
+</div>
+</div>
+<!-- Checkout Button -->
+<button id="checkout-btn" class="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+<span>Proceed to Payment</span>
+<span class="material-symbols-outlined">payments</span>
+</button>
+<div class="flex items-center justify-center gap-2 py-2">
+<span class="material-symbols-outlined text-primary text-xs">shield</span>
+<span class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">Secure Encrypted Checkout</span>
+</div>
+<div class="text-center py-2">
+<p class="text-xs text-slate-500">
+                    By proceeding, you agree to our <a class="text-primary hover:underline" href="#" onclick="showPrivacyPolicy()">Privacy Policy</a>
+                </p>
+</div>
+</div>
+<!-- Padding for bottom nav if needed -->
+<div class="h-4"></div>
+</div>
+
+<script>
+class OrderManager {
+  constructor() {
+    this.selectedDate = null;
+    this.selectedTime = null;
+    this.deliveryAddress = {};
+    this.init();
+  }
+
+  init() {
+    this.setupDatePicker();
+    this.setupTimeSlots();
+    this.setupAddressInputs();
+    this.setupCheckoutButton();
+  }
+
+  setupDatePicker() {
+    const datePicker = document.getElementById('collection-date');
+    
+    // Set minimum date to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const minDate = tomorrow.toISOString().split('T')[0];
+    datePicker.min = minDate;
+    
+    datePicker.addEventListener('change', (e) => {
+      this.selectedDate = e.target.value;
+      this.displayDateSelection();
+      this.validateCheckout();
+    });
+  }
+
+  setupTimeSlots() {
+    const timeButtons = document.querySelectorAll('.time-slot-btn');
+    timeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove previous selection
+        timeButtons.forEach(b => {
+          b.classList.remove('border-primary', 'bg-primary/20', 'text-primary');
+          b.classList.add('border-primary/30', 'bg-white/5');
+        });
+        
+        // Select clicked button
+        btn.classList.add('border-primary', 'bg-primary/20', 'text-primary');
+        btn.classList.remove('border-primary/30', 'bg-white/5');
+        
+        this.selectedTime = btn.dataset.time;
+        this.displayTimeSelection();
+        this.validateCheckout();
+      });
+    });
+  }
+
+  setupAddressInputs() {
+    const line1 = document.getElementById('delivery-address-line1');
+    const line2 = document.getElementById('delivery-address-line2');
+    const notes = document.getElementById('delivery-address-notes');
+    
+    [line1, line2, notes].forEach(input => {
+      input.addEventListener('change', () => {
+        this.deliveryAddress = {
+          line1: line1.value.trim(),
+          line2: line2.value.trim(),
+          notes: notes.value.trim()
+        };
+        this.validateCheckout();
+      });
+    });
+  }
+
+  setupCheckoutButton() {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    checkoutBtn.addEventListener('click', () => this.handleCheckout());
+  }
+
+  displayDateSelection() {
+    const dateDisplay = document.getElementById('order-date-display');
+    if (this.selectedDate) {
+      const date = new Date(this.selectedDate + 'T00:00:00');
+      const options = { weekday: 'short', month: 'short', day: 'numeric' };
+      const formatted = date.toLocaleDateString('en-ZA', options);
+      dateDisplay.textContent = `Date: ${formatted}`;
+    } else {
+      dateDisplay.textContent = 'Date: Not selected';
+    }
+  }
+
+  displayTimeSelection() {
+    const timeDisplay = document.getElementById('order-time-display');
+    if (this.selectedTime) {
+      timeDisplay.textContent = `Time: ${this.selectedTime}`;
+    } else {
+      timeDisplay.textContent = 'Time: Not selected';
+    }
+  }
+
+  validateCheckout() {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const isValid = 
+      this.selectedDate && 
+      this.selectedTime && 
+      this.deliveryAddress.line1 && 
+      this.deliveryAddress.line2;
+    
+    checkoutBtn.disabled = !isValid;
+  }
+
+  handleCheckout() {
+    // Validate all required fields
+    if (!this.selectedDate || !this.selectedTime) {
+      alert('Please select collection date and time');
+      return;
+    }
+
+    if (!this.deliveryAddress.line1 || !this.deliveryAddress.line2) {
+      alert('Please enter complete address (Street and Suburb/City)');
+      return;
+    }
+
+    // Store order details
+    const orderDetails = {
+      date: this.selectedDate,
+      time: this.selectedTime,
+      address: this.deliveryAddress,
+      createdAt: new Date().toISOString(),
+      items: [
+        { name: 'Royal Truffle Burger', qty: 1, price: 150.00 },
+        { name: 'Golden Silk Pancakes', qty: 2, price: 95.00 }
+      ],
+      subtotal: 340.00,
+      total: 340.00
+    };
+
+    // Save to localStorage
+    localStorage.setItem('currentOrder', JSON.stringify(orderDetails));
+
+    // Show confirmation
+    const dateObj = new Date(this.selectedDate + 'T00:00:00');
+    const dateStr = dateObj.toLocaleDateString('en-ZA', { weekday: 'long', month: 'long', day: 'numeric' });
+    
+    alert(`Order confirmed!\n\nCollection: ${dateStr} at ${this.selectedTime}\nAddress: ${this.deliveryAddress.line1}, ${this.deliveryAddress.line2}`);
+
+    // Redirect to payment/success page
+    window.location.href = '../payment_gateway/code.html';
+  }
+}
+
+// Initialize order manager when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const orderManager = new OrderManager();
+});
+</script>
+
+<!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+<div class="bg-neutral-dark border border-primary/30 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+<div class="sticky top-0 bg-neutral-dark border-b border-primary/20 p-6 flex items-center justify-between">
+<h2 class="text-2xl font-bold text-primary">Privacy Policy – She Ate</h2>
+<button id="close-privacy-modal" class="text-slate-400 hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+
+<div class="p-6 space-y-6 text-slate-100">
+<div class="text-sm text-slate-400">
+<strong>Effective Date:</strong> April 7, 2026
+</div>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">1. Introduction</h3>
+<p class="mb-4">Welcome to She Ate ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform, including our website and services.</p>
+<p class="mb-4">By using She Ate, you agree to the terms of this Privacy Policy.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">2. Information We Collect</h3>
+<p class="mb-4">We collect the following categories of personal information:</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">2.1 Personal Identification Information</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Full name</li>
+<li>Email address</li>
+<li>Phone number</li>
+<li>Account login credentials (securely encrypted)</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">2.2 Order Information</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Delivery or pickup address</li>
+<li>Order details (items, quantities, special instructions)</li>
+<li>Order history and preferences</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">2.3 Payment Information</h4>
+<p class="mb-4">Payments are securely processed by third-party providers such as PayFast or Stripe.</p>
+<p class="mb-2">We may collect:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Payment method type (e.g., Visa, Mastercard)</li>
+<li>Transaction ID</li>
+<li>Payment status</li>
+</ul>
+<p class="mb-4"><strong>We do not store:</strong></p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Full card numbers</li>
+<li>CVV codes</li>
+<li>Card expiry details</li>
+</ul>
+<p class="mb-4">All payment processing complies with PCI DSS standards.</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">2.4 Device & Technical Information</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>IP address</li>
+<li>Browser type</li>
+<li>Device type</li>
+<li>Cookies and usage data</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">2.5 Communication Data</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Messages sent via support channels</li>
+<li>Emails and notifications</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">3. How We Use Your Information</h3>
+<p class="mb-4">We use your information to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Process and fulfill orders</li>
+<li>Facilitate delivery or pickup</li>
+<li>Process payments securely</li>
+<li>Provide customer support</li>
+<li>Improve our services and user experience</li>
+<li>Send transactional notifications (order updates, confirmations)</li>
+<li>Send marketing communications (only with your consent)</li>
+<li>Prevent fraud and enhance security</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">4. Sharing of Information</h3>
+<p class="mb-4">We may share your information with:</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">4.1 Service Providers</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Payment processors (e.g., PayFast, Stripe)</li>
+<li>Hosting and infrastructure providers</li>
+<li>Analytics tools</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">4.2 Delivery & Kitchen Partners</h4>
+<p class="mb-4">To fulfill your order, relevant details (name, contact number, address, order details) may be shared with:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Partner kitchens</li>
+<li>Delivery personnel</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2 text-primary">4.3 Legal Requirements</h4>
+<p class="mb-4">We may disclose information if required by law or to protect our legal rights.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">5. Data Security</h3>
+<p class="mb-4">We implement appropriate technical and organizational measures to protect your personal information, including:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Secure Socket Layer (SSL) encryption</li>
+<li>Encrypted password storage</li>
+<li>Restricted access to personal data</li>
+<li>Secure third-party payment processing</li>
+</ul>
+<p class="mb-4">While we strive to protect your data, no system is 100% secure.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">6. Data Retention</h3>
+<p class="mb-4">We retain your information only for as long as necessary to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Provide our services</li>
+<li>Comply with legal obligations</li>
+<li>Resolve disputes</li>
+<li>Enforce agreements</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">7. Your Rights (Under POPIA)</h3>
+<p class="mb-4">In accordance with the Protection of Personal Information Act (POPIA), you have the right to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Access your personal data</li>
+<li>Correct inaccurate information</li>
+<li>Request deletion of your data</li>
+<li>Object to processing for marketing purposes</li>
+</ul>
+<p class="mb-4">To exercise these rights, contact us at: <strong>MandlaMbasa53@gmail.com</strong></p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">8. Cookies and Tracking Technologies</h3>
+<p class="mb-4">We use cookies to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Maintain your session</li>
+<li>Improve platform functionality</li>
+<li>Analyze usage patterns</li>
+</ul>
+<p class="mb-4">You may disable cookies in your browser settings, but this may affect functionality.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">9. Third-Party Links</h3>
+<p class="mb-4">Our platform may contain links to third-party websites. We are not responsible for the privacy practices of these external sites.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">10. Children's Privacy</h3>
+<p class="mb-4">She Ate does not knowingly collect personal information from individuals under the age of 18. If we become aware of such data, we will delete it promptly.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">11. Changes to This Policy</h3>
+<p class="mb-4">We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">12. Contact Us</h3>
+<p class="mb-4">If you have any questions about this Privacy Policy or how your data is handled, please contact us:</p>
+<ul class="list-none mb-4 space-y-1">
+<li><strong>Email:</strong> Mandlambasa53@gmail.com</li>
+<li><strong>Business Name:</strong> She Ate</li>
+<li><strong>Location:</strong> Cape Town, South Africa</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4 text-primary">13. Consent</h3>
+<p class="mb-4">By using our platform, you consent to the collection and use of your information as outlined in this Privacy Policy.</p>
+</div>
+</div>
+</div>
+
+<script>
+// Privacy Policy Modal Handler
+function showPrivacyPolicy() {
+  document.getElementById('privacy-modal').classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Close modal functionality
+  const closeBtn = document.getElementById('close-privacy-modal');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      document.getElementById('privacy-modal').classList.add('hidden');
+    });
+  }
+
+  // Close modal when clicking outside
+  const modal = document.getElementById('privacy-modal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>

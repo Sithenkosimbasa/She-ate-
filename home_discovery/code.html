@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>She Ate - Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet" />
+    <script defer src="../shared/navigation.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white">
+    <div class="max-w-md mx-auto min-h-screen bg-black pb-24">
+      <header class="sticky top-0 z-20 bg-black/90 backdrop-blur-md px-4 pt-4 pb-3 border-b border-[#D4AF37]/10">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">She Ate</p>
+            <h1 class="text-2xl font-extrabold tracking-tight">Curated for her cravings</h1>
+          </div>
+          <div class="flex items-center gap-2">
+            <a aria-label="Notifications" class="h-11 w-11 rounded-full bg-zinc-900 border border-[#D4AF37]/20 flex items-center justify-center" href="../notifications/code.html">
+              <span class="material-symbols-outlined text-[#D4AF37]">notifications</span>
+            </a>
+            <a aria-label="Profile" class="h-11 w-11 rounded-full overflow-hidden border border-[#D4AF37]/30" href="../user_profile/code.html">
+              <img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmX8Wu75E93OsGecSBy4IKCuujJ7-fi9xy6OZPCISbc6oDaHWJLUWFdZU_00FYrSvLFyKNXDLHZnS1XpfITtKRoiGj_IfZLthI914rDWdXlJ-gRCAtCHU1_NOVua66aVSNBo2lKMQ_Um5X9CtqxAoISM6Wxco6raol905IG0tpnR1xVKFSgHNtHkiUkaD3ZDCgF1dU4hqOJzl-NWJoLJUsou6oxrpaEjfaCzaJOuqYFZe3dxHmWiD4EGCXdzpuFnHJI4OATeprOcE" />
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <span class="material-symbols-outlined text-zinc-500">search</span>
+          </span>
+          <input class="w-full rounded-xl border border-zinc-800 bg-zinc-950 py-3 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]" placeholder="Search burgers, meal plans, desserts..." type="text" />
+        </div>
+      </header>
+
+      <main class="px-4 py-5 space-y-6">
+        <section class="relative overflow-hidden rounded-3xl border border-[#D4AF37]/20 bg-zinc-950 p-5 shadow-2xl">
+          <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top_right,_rgba(212,175,55,0.35),_transparent_45%)]"></div>
+          <div class="relative">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-[#D4AF37] mb-2">Today’s Feature</p>
+            <h2 class="text-3xl font-black leading-tight mb-2">Luxury dinner, delivered fast.</h2>
+            <p class="text-sm text-zinc-300 max-w-xs mb-5">Browse signature dishes, weekly meal plans, and premium comfort food in one place.</p>
+            <div class="flex gap-3">
+              <a class="bg-[#D4AF37] rounded-xl px-4 py-3 text-sm font-bold text-black" href="../menu_listing/code.html">Explore Menu</a>
+              <a class="rounded-xl px-4 py-3 text-sm font-bold border border-[#D4AF37]/30 text-[#D4AF37]" href="../meal_planner_weekly/code.html">Plan My Week</a>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-lg font-bold">Quick access</h3>
+            <a class="text-xs font-semibold uppercase tracking-[0.2em] text-[#D4AF37]" href="../menu_listing/code.html">Open all</a>
+          </div>
+          <div class="grid grid-cols-4 gap-3 text-center">
+            <a class="rounded-2xl bg-zinc-950 border border-zinc-800 py-4" href="../menu_listing/code.html">
+              <span class="material-symbols-outlined text-[#D4AF37]">lunch_dining</span>
+              <p class="mt-2 text-[11px] font-semibold">Menu</p>
+            </a>
+            <a class="rounded-2xl bg-zinc-950 border border-zinc-800 py-4" href="../meal_planner_weekly/code.html">
+              <span class="material-symbols-outlined text-[#D4AF37]">calendar_month</span>
+              <p class="mt-2 text-[11px] font-semibold">Planner</p>
+            </a>
+            <a class="rounded-2xl bg-zinc-950 border border-zinc-800 py-4" href="../cart_checkout/code.html">
+              <span class="material-symbols-outlined text-[#D4AF37]">shopping_cart</span>
+              <p class="mt-2 text-[11px] font-semibold">Cart</p>
+            </a>
+            <a class="rounded-2xl bg-zinc-950 border border-zinc-800 py-4" href="../order_tracking/code.html">
+              <span class="material-symbols-outlined text-[#D4AF37]">receipt_long</span>
+              <p class="mt-2 text-[11px] font-semibold">Orders</p>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-lg font-bold">Popular picks</h3>
+            <a class="text-xs font-semibold uppercase tracking-[0.2em] text-[#D4AF37]" href="../menu_listing/code.html">See all</a>
+          </div>
+          <div class="space-y-4">
+            <a class="flex gap-4 rounded-2xl bg-zinc-950 border border-zinc-800 p-3" href="../item_details/code.html">
+              <img alt="Burger" class="h-24 w-24 rounded-xl object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKoOVHqA0pDiCq0Rqzk64vAfipL0diKbiCK-lvoS6JHCKLveroF-EkJO54cLPgXFvyt7FG_xCJ_CSPVIzBhChCDq6zSCdlv-oegZ1uNtwx6jjrgWf-XZRQybSK5iX5pz2H6_qwfNbbal3C2z1LfwGnlnjYlHj1K1XrUTgYXQITkoPyugJ9RFBJ7a8tRZcwSAU546OZKW1AlwyjeCktlkEohkxvdelpJyrCuXjxeStz-bFw4Id-2K-bUFuWXGrNR45ncHXpS21C_m0" />
+              <div class="flex-1">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h4 class="font-bold">Signature Beef Burger</h4>
+                    <p class="text-xs text-zinc-400 mt-1">House sauce, brioche bun, premium toppings</p>
+                  </div>
+                  <span class="text-sm font-bold text-[#D4AF37]">R65</span>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                  <span class="text-[11px] text-zinc-500">15–20 min</span>
+                  <span class="rounded-lg bg-[#D4AF37] px-3 py-1 text-xs font-bold text-black">View</span>
+                </div>
+              </div>
+            </a>
+
+            <a class="flex gap-4 rounded-2xl bg-zinc-950 border border-zinc-800 p-3" href="../item_details/code.html">
+              <img alt="Pancakes" class="h-24 w-24 rounded-xl object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwHHLnZ18R3FUlrnDmQzkxf8o2PPVLPwIsiWNclbPJPVhgxX3PCGKf4TRZdQhqdf-ARB2CujusjPt6uPT6K1svhNjHZ6hjgvC6mNue7Lm4N8Vi-m2Ua9G9de5d8cQW0VsjDq3lkGCQqcibwRWM_jJg_D6GctPTDwsHG0Hahd4g419jB-OevN7tKBy_rWDZUY9W0c-kIeTzf5XcPB298KLFv8dB9Gfu1QC1QTgAdHVzw-v4JjwTu3GqXp3jWVUofYonSZidM5h7ONQ" />
+              <div class="flex-1">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h4 class="font-bold">Golden Silk Pancakes</h4>
+                    <p class="text-xs text-zinc-400 mt-1">Soft stack finished with berries and syrup</p>
+                  </div>
+                  <span class="text-sm font-bold text-[#D4AF37]">R95</span>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                  <span class="text-[11px] text-zinc-500">Chef’s special</span>
+                  <span class="rounded-lg bg-zinc-800 px-3 py-1 text-xs font-bold text-white">Details</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-[#D4AF37]/20 bg-zinc-950 p-4">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Need help?</p>
+              <h3 class="text-lg font-bold mt-1">Support, alerts, and updates</h3>
+            </div>
+            <a class="rounded-xl border border-[#D4AF37]/30 px-4 py-2 text-sm font-semibold text-[#D4AF37]" href="../help_support/code.html">Open</a>
+          </div>
+        </section>
+      </main>
+
+      <nav class="fixed bottom-0 left-1/2 z-30 w-full max-w-md -translate-x-1/2 border-t border-[#D4AF37]/10 bg-black/95 px-4 pb-6 pt-2 backdrop-blur-md">
+        <div class="flex items-center justify-around">
+          <a class="flex flex-col items-center gap-1 text-[#D4AF37]" href="../home_discovery/code.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase">Home</span>
+          </a>
+          <a class="flex flex-col items-center gap-1 text-zinc-400" href="../meal_planner_weekly/code.html">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span class="text-[10px] font-bold uppercase">Planner</span>
+          </a>
+          <a class="flex flex-col items-center gap-1 text-zinc-400" href="../cart_checkout/code.html">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span class="text-[10px] font-bold uppercase">Cart</span>
+          </a>
+          <a class="flex flex-col items-center gap-1 text-zinc-400" href="../notifications/code.html">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="text-[10px] font-bold uppercase">Alerts</span>
+          </a>
+          <a class="flex flex-col items-center gap-1 text-zinc-400" href="../user_profile/code.html">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[10px] font-bold uppercase">Profile</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>

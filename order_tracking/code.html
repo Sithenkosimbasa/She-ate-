@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "gold": "#d4af37",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>She Ate - Order Tracking</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<script defer src="../shared/navigation.js"></script>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto shadow-2xl border-x border-primary/10">
+<!-- Header -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-primary/10">
+<div class="text-primary flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center uppercase tracking-widest">Track Order</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-primary gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</div>
+<!-- Map Section -->
+<div class="flex px-4 py-4">
+<div class="relative w-full aspect-[4/3] bg-primary/5 rounded-xl overflow-hidden border border-primary/20 shadow-lg flex items-center justify-center" data-alt="Collection Point Map">
+<div class="text-center">
+<div class="bg-gold/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+<span class="material-symbols-outlined text-4xl text-gold">storefront</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 font-semibold">She Ate Kitchen</p>
+<p class="text-xs text-slate-500 dark:text-slate-500 mt-1">Collection Point</p>
+</div>
+</div>
+</div>
+
+<!-- Collection Details Card -->
+<div class="px-4">
+<div class="bg-primary/5 dark:bg-white/5 border border-primary/20 rounded-xl p-6 space-y-4 shadow-sm">
+<div class="text-center">
+<h3 class="text-primary dark:text-gold tracking-tight text-2xl font-black leading-tight pb-1" id="collection-time-display">16:00</h3>
+<p class="text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-widest pb-3" id="collection-date-display">Today</p>
+<div class="h-px bg-primary/10 w-full mb-4"></div>
+<p class="text-slate-500 dark:text-slate-500 text-xs font-medium">Order ID: <span class="text-slate-900 dark:text-slate-100 font-bold" id="order-id-display">#SA-88291</span></p>
+</div>
+<div class="bg-white/5 border border-primary/10 rounded-lg p-3 mt-3">
+<p class="text-slate-400 text-xs font-semibold mb-2">Collection Address</p>
+<p class="text-slate-100 text-sm font-semibold" id="address-display">Loading address...</p>
+</div>
+</div>
+</div>
+<!-- Progress Steps -->
+<div class="px-6 py-8">
+<div class="flex flex-col gap-8">
+<!-- Step 1: Order Confirmed -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white ring-4 ring-primary/20 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<div class="h-full w-0.5 bg-primary"></div>
+</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-bold leading-none">Order Confirmed</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Your order has been confirmed</p>
+</div>
+</div>
+<!-- Step 2: Kitchen Preparing -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white ring-4 ring-primary/20 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<div class="h-full w-0.5 bg-primary"></div>
+</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-bold leading-none">Kitchen Preparing</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Chef is preparing your order</p>
+</div>
+</div>
+<!-- Step 3: Ready for Pickup -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gold text-background-dark ring-4 ring-gold/20 animate-pulse">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<div class="h-full w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<div>
+<p class="text-gold font-black leading-none uppercase tracking-wide">Ready for Pickup</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Your order is ready at the counter</p>
+</div>
+</div>
+<!-- Step 4: Collected -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600">
+<span class="material-symbols-outlined text-sm">done_all</span>
+</div>
+</div>
+<div>
+<p class="text-slate-400 dark:text-slate-600 font-bold leading-none">Collected</p>
+<p class="text-slate-400 dark:text-slate-600 text-sm mt-1">Enjoy your meal from She Ate</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Collection Information -->
+<div class="px-4 mb-24">
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-4 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-slate-900 dark:text-slate-100 font-bold">Collection Details</h3>
+<span class="text-gold text-xs font-bold">Info</span>
+</div>
+<div class="space-y-3 text-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gold text-lg">storefront</span>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Location</p>
+<p class="text-slate-900 dark:text-slate-100 font-semibold">She Ate Kitchen</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gold text-lg">schedule</span>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Collection Time</p>
+<p class="text-slate-900 dark:text-slate-100 font-semibold" id="detailed-time-display">16:00</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gold text-lg">event</span>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Collection Date</p>
+<p class="text-slate-900 dark:text-slate-100 font-semibold" id="detailed-date-display">Today</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+</div>
+</div>
+</div>
+<!-- Bottom Navigation (Component based) -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-20">
+<div class="flex gap-2 border-t border-primary/10 bg-background-light dark:bg-background-dark px-4 pb-6 pt-2">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined fill-1">receipt_long</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Orders</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">emoji_events</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Rewards</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Profile</p>
+</a>
+</div>
+</div>
+
+<script>
+// Display collection details from stored order
+function displayOrderDetails() {
+  const order = JSON.parse(localStorage.getItem('currentOrder'));
+  
+  if (!order) {
+    // Set default values if no order in localStorage
+    console.log('No order found in localStorage');
+    return;
+  }
+
+  // Format date for display
+  const orderDate = new Date(order.date + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  let dateDisplay = 'Not set';
+  if (orderDate.toDateString() === today.toDateString()) {
+    dateDisplay = 'Today';
+  } else {
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
+    dateDisplay = orderDate.toLocaleDateString('en-ZA', options);
+  }
+
+  // Update collection time displays
+  document.getElementById('collection-time-display').textContent = order.time;
+  document.getElementById('collection-date-display').textContent = dateDisplay;
+  document.getElementById('detailed-time-display').textContent = order.time;
+  document.getElementById('detailed-date-display').textContent = dateDisplay;
+  
+  // Update address display
+  const addressText = `${order.address.line1}, ${order.address.line2}${order.address.notes ? ' • ' + order.address.notes : ''}`;
+  document.getElementById('address-display').textContent = addressText;
+  
+  // Generate order ID if not set
+  const orderId = 'SA-' + Math.random().toString().substr(2, 5).toUpperCase();
+  document.getElementById('order-id-display').textContent = '#' + orderId;
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', displayOrderDetails);
+</script>
+</body>
+</html>
+</div>
+</body></html>

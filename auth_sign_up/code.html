@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;family=Montserrat:wght@600;700&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#ec5b13",
+                "background-light": "#f8f6f6",
+                "background-dark": "#221610",
+              },
+              fontFamily: {
+                "display": ["Public Sans"],
+                "montserrat": ["Montserrat", "sans-serif"],
+                "opensans": ["Open Sans", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px", "2xl": "1rem"},
+            },
+          },
+        }
+      </script>
+<title>Sign Up | She ate</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<script defer src="../shared/navigation.js"></script>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4">
+<div class="relative w-full max-w-[480px] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-primary/20">
+<!-- Header Section -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer hover:bg-primary/10 rounded-full transition-colors" data-icon="arrow_back">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="font-montserrat text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Create Account</h2>
+</div>
+<div class="px-6 pt-8 pb-4 text-center">
+<h1 class="font-montserrat text-primary tracking-tight text-[32px] font-bold leading-tight pb-2">Join She ate</h1>
+<p class="font-opensans text-slate-600 dark:text-slate-400 text-base font-normal leading-normal">Start your culinary journey today</p>
+</div>
+<!-- Form Section -->
+<form class="px-6 pb-10 space-y-4">
+<div class="flex flex-col gap-1">
+<label class="font-opensans text-slate-700 dark:text-slate-300 text-sm font-semibold px-1">Full Name</label>
+<div class="relative">
+<input class="form-input flex w-full rounded-xl border border-slate-200 dark:border-primary/30 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 px-4 font-opensans" placeholder="Enter your full name" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-opensans text-slate-700 dark:text-slate-300 text-sm font-semibold px-1">Email</label>
+<div class="relative">
+<input class="form-input flex w-full rounded-xl border border-slate-200 dark:border-primary/30 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 px-4 font-opensans" placeholder="example@email.com" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-opensans text-slate-700 dark:text-slate-300 text-sm font-semibold px-1">Phone Number</label>
+<div class="relative">
+<input class="form-input flex w-full rounded-xl border border-slate-200 dark:border-primary/30 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 px-4 font-opensans" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-opensans text-slate-700 dark:text-slate-300 text-sm font-semibold px-1">Password</label>
+<div class="relative">
+<input class="form-input flex w-full rounded-xl border border-slate-200 dark:border-primary/30 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 px-4 font-opensans" placeholder="Create a password" type="password"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-opensans text-slate-700 dark:text-slate-300 text-sm font-semibold px-1">Confirm Password</label>
+<div class="relative">
+<input class="form-input flex w-full rounded-xl border border-slate-200 dark:border-primary/30 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 px-4 font-opensans" placeholder="Repeat your password" type="password"/>
+</div>
+</div>
+<!-- Terms and Privacy Policy -->
+<div class="flex items-start gap-3 pt-4">
+<input class="mt-1 w-4 h-4 text-primary bg-white dark:bg-slate-800 border-slate-200 dark:border-primary/30 rounded focus:ring-primary focus:ring-2" id="accept-terms" type="checkbox"/>
+<label class="font-opensans text-slate-600 dark:text-slate-400 text-sm leading-relaxed" for="accept-terms">
+                    I agree to the <a class="text-primary font-semibold hover:underline" href="#" onclick="showPrivacyPolicy()">Terms & Conditions and Privacy Policy</a>
+                </label>
+</div>
+<div class="pt-6">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-montserrat font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-[0.98]" type="submit" id="create-account-btn" disabled>
+                    Create Account
+                </button>
+<button class="w-full mt-4 border-2 border-primary text-primary hover:bg-primary/5 font-montserrat font-bold py-4 rounded-xl transition-all" type="button">
+                    Sign in with Google
+                </button>
+</div>
+<div class="text-center pt-6">
+<p class="font-opensans text-slate-600 dark:text-slate-400 text-sm">
+                    Already have an account? 
+                    <a class="text-primary font-bold hover:underline" href="#">Log in</a>
+</p>
+</div>
+</form>
+<!-- Decorative background elements -->
+<div class="absolute top-0 right-0 -z-10 opacity-10">
+<svg fill="none" height="200" viewbox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+<circle class="text-primary" cx="150" cy="50" fill="currentColor" r="100"></circle>
+</svg>
+</div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+<div class="bg-white dark:bg-slate-900 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+<div class="sticky top-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-primary/20 p-6 flex items-center justify-between rounded-t-2xl">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Privacy Policy – She Ate</h2>
+<button id="close-privacy-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+
+<div class="p-6 space-y-6 text-slate-900 dark:text-slate-100">
+<div class="text-sm text-slate-600 dark:text-slate-400">
+<strong>Effective Date:</strong> April 7, 2026
+</div>
+
+<h3 class="text-xl font-bold mt-6 mb-4">1. Introduction</h3>
+<p class="mb-4">Welcome to She Ate ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform, including our website and services.</p>
+<p class="mb-4">By using She Ate, you agree to the terms of this Privacy Policy.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">2. Information We Collect</h3>
+<p class="mb-4">We collect the following categories of personal information:</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">2.1 Personal Identification Information</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Full name</li>
+<li>Email address</li>
+<li>Phone number</li>
+<li>Account login credentials (securely encrypted)</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">2.2 Order Information</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Delivery or pickup address</li>
+<li>Order details (items, quantities, special instructions)</li>
+<li>Order history and preferences</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">2.3 Payment Information</h4>
+<p class="mb-4">Payments are securely processed by third-party providers such as PayFast or Stripe.</p>
+<p class="mb-2">We may collect:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Payment method type (e.g., Visa, Mastercard)</li>
+<li>Transaction ID</li>
+<li>Payment status</li>
+</ul>
+<p class="mb-4"><strong>We do not store:</strong></p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Full card numbers</li>
+<li>CVV codes</li>
+<li>Card expiry details</li>
+</ul>
+<p class="mb-4">All payment processing complies with PCI DSS standards.</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">2.4 Device & Technical Information</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>IP address</li>
+<li>Browser type</li>
+<li>Device type</li>
+<li>Cookies and usage data</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">2.5 Communication Data</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Messages sent via support channels</li>
+<li>Emails and notifications</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4">3. How We Use Your Information</h3>
+<p class="mb-4">We use your information to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Process and fulfill orders</li>
+<li>Facilitate delivery or pickup</li>
+<li>Process payments securely</li>
+<li>Provide customer support</li>
+<li>Improve our services and user experience</li>
+<li>Send transactional notifications (order updates, confirmations)</li>
+<li>Send marketing communications (only with your consent)</li>
+<li>Prevent fraud and enhance security</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4">4. Sharing of Information</h3>
+<p class="mb-4">We may share your information with:</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">4.1 Service Providers</h4>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Payment processors (e.g., PayFast, Stripe)</li>
+<li>Hosting and infrastructure providers</li>
+<li>Analytics tools</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">4.2 Delivery & Kitchen Partners</h4>
+<p class="mb-4">To fulfill your order, relevant details (name, contact number, address, order details) may be shared with:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Partner kitchens</li>
+<li>Delivery personnel</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-2">4.3 Legal Requirements</h4>
+<p class="mb-4">We may disclose information if required by law or to protect our legal rights.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">5. Data Security</h3>
+<p class="mb-4">We implement appropriate technical and organizational measures to protect your personal information, including:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Secure Socket Layer (SSL) encryption</li>
+<li>Encrypted password storage</li>
+<li>Restricted access to personal data</li>
+<li>Secure third-party payment processing</li>
+</ul>
+<p class="mb-4">While we strive to protect your data, no system is 100% secure.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">6. Data Retention</h3>
+<p class="mb-4">We retain your information only for as long as necessary to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Provide our services</li>
+<li>Comply with legal obligations</li>
+<li>Resolve disputes</li>
+<li>Enforce agreements</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4">7. Your Rights (Under POPIA)</h3>
+<p class="mb-4">In accordance with the Protection of Personal Information Act (POPIA), you have the right to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Access your personal data</li>
+<li>Correct inaccurate information</li>
+<li>Request deletion of your data</li>
+<li>Object to processing for marketing purposes</li>
+</ul>
+<p class="mb-4">To exercise these rights, contact us at: <strong>MandlaMbasa53@gmail.com</strong></p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">8. Cookies and Tracking Technologies</h3>
+<p class="mb-4">We use cookies to:</p>
+<ul class="list-disc list-inside mb-4 space-y-1">
+<li>Maintain your session</li>
+<li>Improve platform functionality</li>
+<li>Analyze usage patterns</li>
+</ul>
+<p class="mb-4">You may disable cookies in your browser settings, but this may affect functionality.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">9. Third-Party Links</h3>
+<p class="mb-4">Our platform may contain links to third-party websites. We are not responsible for the privacy practices of these external sites.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">10. Children's Privacy</h3>
+<p class="mb-4">She Ate does not knowingly collect personal information from individuals under the age of 18. If we become aware of such data, we will delete it promptly.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">11. Changes to This Policy</h3>
+<p class="mb-4">We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-4">12. Contact Us</h3>
+<p class="mb-4">If you have any questions about this Privacy Policy or how your data is handled, please contact us:</p>
+<ul class="list-none mb-4 space-y-1">
+<li><strong>Email:</strong> Mandlambasa53@gmail.com</li>
+<li><strong>Business Name:</strong> She Ate</li>
+<li><strong>Location:</strong> Cape Town, South Africa</li>
+</ul>
+
+<h3 class="text-xl font-bold mt-6 mb-4">13. Consent</h3>
+<p class="mb-4">By using our platform, you consent to the collection and use of your information as outlined in this Privacy Policy.</p>
+</div>
+</div>
+</div>
+
+<script>
+// Terms and Privacy Policy Handling
+function showPrivacyPolicy() {
+  document.getElementById('privacy-modal').classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Close modal functionality
+  document.getElementById('close-privacy-modal').addEventListener('click', () => {
+    document.getElementById('privacy-modal').classList.add('hidden');
+  });
+
+  // Close modal when clicking outside
+  document.getElementById('privacy-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('privacy-modal')) {
+      document.getElementById('privacy-modal').classList.add('hidden');
+    }
+  });
+
+  // Terms checkbox validation
+  const termsCheckbox = document.getElementById('accept-terms');
+  const createAccountBtn = document.getElementById('create-account-btn');
+
+  termsCheckbox.addEventListener('change', () => {
+    createAccountBtn.disabled = !termsCheckbox.checked;
+  });
+
+  // Form validation
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
+    if (!termsCheckbox.checked) {
+      e.preventDefault();
+      alert('Please accept the Terms & Conditions and Privacy Policy to continue.');
+      return;
+    }
+
+    // Basic form validation
+    const inputs = form.querySelectorAll('input[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        isValid = false;
+        input.classList.add('border-red-500');
+      } else {
+        input.classList.remove('border-red-500');
+      }
+    });
+
+    if (!isValid) {
+      e.preventDefault();
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    // Password confirmation check
+    const password = form.querySelector('input[type="password"]:nth-of-type(1)');
+    const confirmPassword = form.querySelector('input[type="password"]:nth-of-type(2)');
+
+    if (password.value !== confirmPassword.value) {
+      e.preventDefault();
+      alert('Passwords do not match.');
+      confirmPassword.classList.add('border-red-500');
+      return;
+    }
+
+    // If all validations pass, show success message
+    e.preventDefault();
+    alert('Account created successfully! Welcome to She Ate.');
+    // Here you would typically redirect to the next page or handle the signup
+  });
+});
+</script>
+</body></html>
