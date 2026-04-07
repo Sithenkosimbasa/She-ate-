@@ -1,0 +1,20 @@
+{
+  "name": "she-ate",
+  "version": "1.0.0",
+  "description": "She Ate - Food ordering platform",
+  "main": "index.html",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --dev",
+    "clean": "rmdir /s /q build",
+    "serve": "npx http-server build -p 3000"
+  },
+  "keywords": ["food", "ordering", "restaurant"],
+  "author": "She Ate",
+  "license": "ISC",
+  "devDependencies": {
+    "html-minifier": "^4.0.0",
+    "clean-css": "^5.3.2",
+    "terser": "^5.19.2"
+  }
+}
