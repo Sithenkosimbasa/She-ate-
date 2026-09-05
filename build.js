@@ -10,10 +10,8 @@ const isDev = process.argv.includes('--dev');
 const srcDir = path.join(__dirname);
 const buildDir = path.join(__dirname, 'build');
 
-// Ensure build directory exists
-if (!fs.existsSync(buildDir)) {
-  fs.mkdirSync(buildDir, { recursive: true });
-}
+fs.rmSync(buildDir, { recursive: true, force: true });
+fs.mkdirSync(buildDir, { recursive: true });
 
 // Files and folders to copy
 const itemsToCopy = [
@@ -21,6 +19,7 @@ const itemsToCopy = [
   'styles.css',
   'auth_login',
   'auth_sign_up',
+  'auth_verify',
   'cart_checkout',
   'help_support',
   'home_discovery',
@@ -35,8 +34,10 @@ const itemsToCopy = [
   'shared',
   'splash_screen',
   'user_profile',
+  '_headers',
   'ADMIN_GUIDE.md',
-  'ORDER_COLLECTION_GUIDE.md'
+  'ORDER_COLLECTION_GUIDE.md',
+  'LAUNCH_CHANGELOG.md'
 ];
 
 // Copy function
@@ -57,7 +58,7 @@ function copyFileSync(source, target) {
 }
 
 // Recursive copy function
-function copyFolderRecursiveSync(source, target) {
+async function copyFolderRecursiveSync(source, target) {
   let files = [];
 
   // Check if folder needs to be created or integrated
@@ -69,14 +70,14 @@ function copyFolderRecursiveSync(source, target) {
   // Copy
   if (fs.lstatSync(source).isDirectory()) {
     files = fs.readdirSync(source);
-    files.forEach(function (file) {
+    for (const file of files) {
       const curSource = path.join(source, file);
       if (fs.lstatSync(curSource).isDirectory()) {
-        copyFolderRecursiveSync(curSource, targetFolder);
+        await copyFolderRecursiveSync(curSource, targetFolder);
       } else {
-        copyFileSync(curSource, targetFolder);
+        await processFile(curSource, path.join(targetFolder, file));
       }
-    });
+    }
   }
 }
 
@@ -119,14 +120,14 @@ function processCSS(filePath) {
 }
 
 // Process JS files (if any separate ones)
-function processJS(filePath) {
+async function processJS(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   if (isDev) {
     return content;
   }
 
   try {
-    const result = minifyJS(content);
+    const result = await minifyJS(content);
     return result.code;
   } catch (error) {
     console.warn(`Warning: Could not minify JS ${filePath}, using original`);
@@ -134,42 +135,45 @@ function processJS(filePath) {
   }
 }
 
+async function processFile(source, target) {
+  const extension = path.extname(source).toLowerCase();
+  let processedContent;
+
+  if (extension === '.html') {
+    processedContent = processHTML(source);
+  } else if (extension === '.css') {
+    processedContent = processCSS(source);
+  } else if (extension === '.js') {
+    processedContent = await processJS(source);
+  } else {
+    copyFileSync(source, target);
+    return;
+  }
+
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, processedContent, 'utf8');
+  console.log(`✓ Processed: ${path.relative(srcDir, source)}`);
+}
+
 // Main build process
 console.log(isDev ? '🚀 Building in development mode...' : '📦 Building for production...');
 
-itemsToCopy.forEach(item => {
+(async () => {
+for (const item of itemsToCopy) {
   const sourcePath = path.join(srcDir, item);
 
   if (!fs.existsSync(sourcePath)) {
     console.log(`⚠️  Skipping: ${item} (not found)`);
-    return;
+    continue;
   }
 
   if (fs.statSync(sourcePath).isDirectory()) {
     // Copy entire directory
-    copyFolderRecursiveSync(sourcePath, buildDir);
+    await copyFolderRecursiveSync(sourcePath, buildDir);
   } else {
-    // Process individual files
-    let processedContent = '';
-
-    if (item.endsWith('.html')) {
-      processedContent = processHTML(sourcePath);
-    } else if (item.endsWith('.css')) {
-      processedContent = processCSS(sourcePath);
-    } else if (item.endsWith('.js')) {
-      processedContent = processJS(sourcePath);
-    } else {
-      // Copy other files as-is
-      copyFileSync(sourcePath, buildDir);
-      return;
-    }
-
-    // Write processed content
-    const targetPath = path.join(buildDir, item);
-    fs.writeFileSync(targetPath, processedContent, 'utf8');
-    console.log(`✓ Processed: ${item}`);
+    await processFile(sourcePath, path.join(buildDir, item));
   }
-});
+}
 
 // Create a simple deployment-ready index
 const buildIndexPath = path.join(buildDir, 'index.html');
@@ -189,3 +193,4 @@ if (fs.existsSync(buildIndexPath)) {
 console.log('✅ Build completed successfully!');
 console.log(`📁 Build output: ${buildDir}`);
 console.log(isDev ? '🔧 Run "npm run serve" to test the build' : '🚀 Ready for deployment!');
+})();

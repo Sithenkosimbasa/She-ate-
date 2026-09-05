@@ -28,6 +28,7 @@
           },
         }
     </script>
+<title>She Ate | Mobile-First Food Website</title>
 <style>
         .gold-gradient {
             background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%);
@@ -44,6 +45,8 @@
       min-height: max(884px, 100dvh);
     }
   </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../shared/supabase.js"></script>
 <script defer src="../shared/navigation.js"></script>
   </head>
 <body class="bg-background-dark font-display text-slate-100 min-h-screen flex items-center justify-center p-4">
@@ -79,6 +82,7 @@
                 </button>
 </div>
 </form>
+<p id="auth-message" class="mt-4 text-center text-sm text-red-300" role="status" aria-live="polite"></p>
 <div class="mt-6">
 <div class="relative">
 <div class="absolute inset-0 flex items-center">

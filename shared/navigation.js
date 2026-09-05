@@ -1,4 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+/*
+ * She Ate routing: Splash -> Sign Up -> Sign In (returning users) -> Email
+ * verification -> Main Menu -> Item detail -> Cart -> Checkout.
+ * Main Menu, Item detail, Cart, and Checkout require a verified Supabase user.
+ * PayFast remains a prepared checkout step; payment confirmation is server-side.
+ */
+document.addEventListener('DOMContentLoaded', async () => {
   const parts = window.location.pathname.replace(/\\/g, '/').split('/').filter(Boolean);
   const fileName = parts[parts.length - 1] || '';
   const isNestedScreen = /^code\.html?$/i.test(fileName);
@@ -14,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onboarding_2: `${prefix}onboarding_2/code.html`,
     auth_login: `${prefix}auth_login/code.html`,
     auth_sign_up: `${prefix}auth_sign_up/code.html`,
+    auth_verify: `${prefix}auth_verify/code.html`,
     home_discovery: `${prefix}home_discovery/code.html`,
     menu_listing: `${prefix}menu_listing/code.html`,
     item_details: `${prefix}item_details/code.html`,
@@ -30,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const labelOf = (element) => normalize(element?.textContent || '');
   const urlFor = (target) => routes[target] || target;
 
-  const navigate = (target, { external = false } = {}) => {
+  const navigate = (target, { external = false, replace = false } = {}) => {
     const url = urlFor(target);
     if (!url) return;
 
@@ -39,7 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    window.location.href = url;
+    if (replace) {
+      window.location.replace(url);
+    } else {
+      window.location.assign(url);
+    }
   };
 
   const wire = (element, target, options = {}) => {
@@ -100,16 +111,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const protectedPages = new Set([
+    'home_discovery', 'menu_listing', 'item_details', 'cart_checkout',
+    'payment_gateway', 'order_tracking', 'meal_planner_weekly',
+    'notifications', 'user_profile'
+  ]);
+
+  const getUser = async () => {
+    if (!window.sheAteAuth) return null;
+    const { data, error } = await window.sheAteAuth.getSession();
+    if (error) return null;
+    return data.session?.user || null;
+  };
+
+  const isVerified = (user) => Boolean(user?.email_confirmed_at || user?.confirmed_at);
+  const user = await getUser();
+
+  if (protectedPages.has(currentPage) && !isVerified(user)) {
+    navigate('auth_login', { replace: true });
+    return;
+  }
+
   switch (currentPage) {
     case 'index':
       wire(document.getElementById('open-splash'), 'splash_screen');
-      if (document.body.dataset.splashLaunch === 'true') {
-        setTimeout(() => navigate('splash_screen'), 80);
-      }
+      navigate('auth_sign_up', { replace: true });
       break;
 
     case 'splash_screen':
-      setTimeout(() => navigate('onboarding_1'), 1800);
+      navigate('auth_sign_up', { replace: true });
       break;
 
     case 'onboarding_1':
@@ -125,9 +155,25 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'auth_login': {
       const loginForm = document.querySelector('form');
       if (loginForm) {
-        loginForm.addEventListener('submit', (event) => {
+        loginForm.addEventListener('submit', async (event) => {
           event.preventDefault();
-          navigate('home_discovery');
+          const message = document.getElementById('auth-message');
+          const submit = loginForm.querySelector('[type="submit"]');
+          if (!window.sheAteAuth) {
+            if (message) message.textContent = 'Authentication is not configured yet.';
+            return;
+          }
+          submit.disabled = true;
+          const { error } = await window.sheAteAuth.signInWithPassword({
+            email: loginForm.email.value.trim(), password: loginForm.password.value
+          });
+          if (error) {
+            if (message) message.textContent = error.message;
+            submit.disabled = false;
+            return;
+          }
+          const signedInUser = await getUser();
+          navigate(isVerified(signedInUser) ? 'home_discovery' : 'auth_verify', { replace: true });
         });
       }
       wire(firstLink((label) => label.includes('create an account')), 'auth_sign_up');
@@ -138,14 +184,70 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'auth_sign_up': {
       const signUpForm = document.querySelector('form');
       if (signUpForm) {
-        signUpForm.addEventListener('submit', (event) => {
+        signUpForm.addEventListener('submit', async (event) => {
           event.preventDefault();
-          navigate('home_discovery');
+          const message = document.getElementById('auth-message');
+          const submit = signUpForm.querySelector('[type="submit"]');
+          if (!window.sheAteAuth) {
+            if (message) message.textContent = 'Authentication is not configured yet.';
+            return;
+          }
+          if (signUpForm.password.value !== signUpForm.password_confirm.value) {
+            if (message) message.textContent = 'Passwords do not match.';
+            return;
+          }
+          submit.disabled = true;
+          const { data, error } = await window.sheAteAuth.signUp({
+            email: signUpForm.email.value.trim(),
+            password: signUpForm.password.value,
+            options: { data: { full_name: signUpForm.full_name.value, phone: signUpForm.phone.value } }
+          });
+          if (error) {
+            if (message) message.textContent = error.message;
+            submit.disabled = false;
+            return;
+          }
+          sessionStorage.setItem('sheAteVerificationEmail', signUpForm.email.value.trim());
+          navigate(data.session ? 'home_discovery' : 'auth_verify', { replace: true });
         });
       }
-      wire(firstLink((label) => label === 'log in'), 'auth_login');
+      wire(firstLink((label) => label === 'log in' || label === 'sign in'), 'auth_login');
       wire(firstIconTarget('arrow_back'), 'auth_login');
-      wire(firstButton((label) => label.includes('sign in with google')), 'home_discovery');
+      break;
+    }
+
+    case 'auth_verify': {
+      const email = sessionStorage.getItem('sheAteVerificationEmail') || user?.email || '';
+      const emailTarget = document.getElementById('verification-email');
+      if (emailTarget) emailTarget.textContent = email;
+      const verifyForm = document.querySelector('form');
+      verifyForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = document.getElementById('auth-message');
+        const { error } = await window.sheAteAuth.verifyOtp({
+          email, token: verifyForm.token.value.trim(), type: 'email'
+        });
+        if (error) {
+          if (message) message.textContent = error.message;
+          return;
+        }
+        sessionStorage.removeItem('sheAteVerificationEmail');
+        navigate('home_discovery', { replace: true });
+      });
+      document.getElementById('resend-otp')?.addEventListener('click', async (event) => {
+        const button = event.currentTarget;
+        const message = document.getElementById('auth-message');
+        button.disabled = true;
+        const { error } = await window.sheAteAuth.signInWithOtp({ email });
+        if (message) message.textContent = error ? error.message : 'A new verification code is on its way.';
+        let remaining = 60;
+        button.textContent = `Resend code (${remaining}s)`;
+        const timer = setInterval(() => {
+          remaining -= 1;
+          button.textContent = remaining ? `Resend code (${remaining}s)` : 'Resend code';
+          if (!remaining) { clearInterval(timer); button.disabled = false; }
+        }, 1000);
+      });
       break;
     }
 

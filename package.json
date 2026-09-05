@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "dev": "node build.js --dev",
-    "clean": "rmdir /s /q build",
+    "clean": "node -e \"require('fs').rmSync('build', { recursive: true, force: true })\"",
     "serve": "npx http-server build -p 3000"
   },
   "keywords": ["food", "ordering", "restaurant"],

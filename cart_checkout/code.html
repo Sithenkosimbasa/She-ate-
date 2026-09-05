@@ -45,7 +45,7 @@
       min-height: max(884px, 100dvh);
     }
   </style>
-<script defer src="../shared/navigation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../shared/supabase.js"></script><script defer src="../shared/navigation.js"></script>
   </head>
 <body class="bg-background-dark text-slate-100 min-h-screen">
 <div class="relative flex h-auto min-h-screen w-full max-w-[430px] mx-auto flex-col bg-background-dark overflow-x-hidden border-x border-primary/10">
@@ -337,8 +337,6 @@ class OrderManager {
     
     alert(`Order confirmed!\n\nCollection: ${dateStr} at ${this.selectedTime}\nAddress: ${this.deliveryAddress.line1}, ${this.deliveryAddress.line2}`);
 
-    // Redirect to payment/success page
-    window.location.href = '../payment_gateway/code.html';
   }
 }
 
