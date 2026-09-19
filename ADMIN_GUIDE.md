@@ -1,92 +1,23 @@
 # She Ate - Admin Panel Guide
 
-## Overview
-The admin panel allows authorized administrators to manage menu items, change prices, and upload images for the menu listing page.
+## This feature has been removed
 
-## Accessing Admin Mode
+The previous version of `menu_listing/code.html` shipped a client-side "admin panel" that could be unlocked by clicking the header logo 5 times and entering the password `admin123`, which was hardcoded in plain text in the page's JavaScript and documented in this file.
 
-### Method 1: Direct Admin Login
-1. Click the menu logo "She Ate" header **5 times in quick succession** (within 3 seconds)
-2. A password prompt will appear
-3. Enter the admin password: `admin123`
-4. Once authenticated, an "Admin Panel" button (⚙️) will appear in the header next to the profile icon
-5. Click the admin button to open the admin panel
+That implementation had no real security:
 
-### Method 2: Manual URL Parameter (Optional Enhancement)
-You can also access admin mode by typing in the browser console:
-```javascript
-adminPanel.setAdminMode(true);
-adminPanel.showAdminButton();
-```
+- The password was visible to anyone who read the page source.
+- Admin mode could be enabled directly from the browser console (`adminPanel.setAdminMode(true)`) — the password prompt was never actually required.
+- "Admin" state and menu edits were stored in `localStorage`, which is per-browser and trivially editable by any visitor, not a real authorization mechanism.
 
-## Admin Panel Features
+It has been removed from the site as part of a security audit.
 
-### 1. Add New Menu Items
-- **Item Name**: Enter the name of the menu item (e.g., "Classic Burger")
-- **Price (R)**: Enter price in Rands (e.g., 16.50)
-- **Rating**: Enter rating from 0-5 (e.g., 4.8)
-- **Description**: Brief description of the item and ingredients
-- **Prep Time**: Estimated preparation time (e.g., "15-20 min")
-- **Calories**: Nutritional information (e.g., 840 kcal)
-- **Image URL**: Paste a direct link to an image URL, OR
-- **Upload Image**: Upload a local image file
+## Recommended replacement
 
-Click **"Add Item"** to save the new menu item.
+Follow the same pattern used by the Vaultly reference app's `/admin` panel:
 
-### 2. Edit/Delete Items
-In the "Current Menu Items" section:
-- View all menu items with price and description
-- Click **Delete** button on any item to remove it
-- Confirm deletion when prompted
+1. Add an `is_admin` (or `role`) column to the `profiles` table in Supabase, defaulting to `false`, settable only via the Supabase dashboard or a trusted server-side process — never from client code.
+2. Add Row Level Security policies on the `menu_items` table so `INSERT`/`UPDATE`/`DELETE` are only allowed when `auth.uid()` matches a profile with `role = 'admin'`.
+3. Build the admin UI as a normal authenticated page that calls `supabase.auth.getSession()` and checks the caller's role (client-side check for UX only — RLS is what actually enforces it) before rendering the edit form.
 
-### 3. Image Handling
-- **URL Method**: Paste a direct link to an image
-- **Upload Method**: Select a local image file from your computer
-  - Files are converted to data URLs and stored in browser localStorage
-  - Supports: JPG, PNG, GIF, WebP
-
-## Data Storage
-
-All menu items are stored locally in the browser's **localStorage**:
-- Data persists even after closing the browser
-- Each browser/device maintains separate data
-- To export: Use browser DevTools Console:
-  ```javascript
-  console.log(JSON.parse(localStorage.getItem('menuItems')))
-  ```
-
-## Quick Tips
-
-1. **Password**: Change `admin123` to a secure password by editing line 431 in code.html
-2. **Default Items**: Two sample burger items are pre-loaded on first visit
-3. **Data Backup**: LocalStorage data is only stored locally - consider regular backups
-4. **Mobile Friendly**: Admin panel works on mobile devices
-5. **Security Note**: This is front-end only auth. For production, implement proper backend authentication
-
-## Admin Password Change
-
-To change the admin password:
-1. Open `menu_listing/code.html` in an editor
-2. Find line with: `this.adminPassword = 'admin123';`
-3. Replace `'admin123'` with your new password
-4. Save the file
-
-## Troubleshooting
-
-- **Admin button not showing**: Click logo 5 times and enter password correctly
-- **Images not displaying**: Use full image URLs (starting with http:// or https://)
-- **Data not saving**: Check browser's localStorage settings
-- **Deleted items reappear**: Clear browser cache/localStorage
-
-## Security Note
-
-⚠️ **Important**: This implementation uses front-end only authentication. For a production system, you should:
-- Implement proper backend authentication
-- Use secure API endpoints to manage menu items
-- Add user roles and permissions
-- Encrypt sensitive data
-- Use HTTPS for all communications
-
----
-
-For support or questions, refer to the code comments in `menu_listing/code.html`
+Until that's built, treat the live menu as static content edited directly in `menu_listing/code.html` and deployed through the normal build/deploy process.

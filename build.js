@@ -24,6 +24,7 @@ const itemsToCopy = [
   'help_support',
   'home_discovery',
   'item_details',
+  'legal',
   'meal_planner_weekly',
   'menu_listing',
   'notifications',

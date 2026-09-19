@@ -337,7 +337,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       wire(links[1], 'home_discovery');
       wire(links[2], 'payment_gateway');
       wire(links[3], 'notifications');
-      wire(firstButton((label) => label.includes('log out')), 'auth_login');
+      const logoutButton = firstButton((label) => label.includes('log out'));
+      if (logoutButton) {
+        logoutButton.style.cursor = 'pointer';
+        logoutButton.addEventListener('click', async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (window.sheAteAuth) {
+            await window.sheAteAuth.signOut();
+          }
+          navigate('auth_login', { replace: true });
+        });
+      }
       break;
     }
 
